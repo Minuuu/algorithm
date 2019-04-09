@@ -1,130 +1,131 @@
 #include<stdio.h>
 #include<string.h>
+#include<limits.h>
 #include<queue>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+
 using namespace std;
-int T;
-int N,M,K;
-int d[5][2]={{0,0},{-1,0},{1,0},{0,-1},{0,1}};
-typedef struct node{
-	int x;
-	int y;
-	int cnt;
-	int dir;
-} Node;
-int map[100][100];
-Node bug[1000];
-void mix(int x, int y)
-{
-	int maxBug=-1;
-	int dir;
-	int sum=0;
-	int idx=-1;
-	for(int i=0;i<K;i++)
+int T,N;
+int map[11][11];
+typedef struct{
+	int x,y,len,wait;
+} Stair;
+typedef struct{
+	int x,y,num,dst;
+} Person;
+vector<Stair> s;
+vector<Person> p;
+
+queue<Person> v1;
+vector<Person> v2;
+int dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
+struct compare{
+	bool operator()(const Person &a, const Person &b)
 	{
-		if(bug[i].x==x&&bug[i].y==y)
-		{
-			sum+=bug[i].cnt;
-			if(maxBug<bug[i].cnt)
-			{
-				if(idx!=-1)
-				{
-					bug[idx].x=0;
-					bug[idx].y=0;
-					bug[idx].cnt=0;
-					bug[idx].dir=0;
-				}
-				idx = i;
-				maxBug=bug[i].cnt;
-				dir=bug[i].dir;
-			}
-			else{
-				bug[i].x=0;
-				bug[i].y=0;
-				bug[i].cnt=0;
-				bug[i].dir=0;
-			}
-		}
+		return a.dst>b.dst;
 	}
-	bug[idx].cnt=sum;
-	bug[idx].dir=dir;
+};
+bool cmp(Person &a, Person &b)
+{
+	return a.dst>b.dst;
+}
+int solve()
+{
+	int ret=-1;
+	/*
+	for(int i=0;i<p.size();i++)
+	{
+		printf("%d ", p[i].num);
+	}
+	printf("\n");
+	*/
+	priority_queue<Person,vector<Person>,compare> pq1;
+	priority_queue<Person,vector<Person>,compare> pq2;
+	for(int i=0;i<p.size();i++)
+	{
+		int idx = p[i].num-1;
+		p[i].dst=abs(p[i].x-s[idx].x)+abs(p[i].y-s[idx].y);
+		if(idx==0)
+			pq1.push(p[i]);
+		if(idx==1)
+			pq2.push(p[i]);
+	}
+	
+	int len1 = s[0].len;
+	int len2 = s[1].len;
+	int st[3]={0,};
+	int count =0;
+	while(!pq1.empty())
+	{
+		int dst = pq1.top().dst;
+		pq1.pop();
+		if(dst<st[count%3])
+			dst = st[count%3]+s[0].len;
+		else
+			dst+=s[0].len+1;
+		st[count%3]=dst;
+		ret = max(ret,st[count%3]);
+		count++;
+	}
+	memset(st,0,sizeof(st));
+	count=0;
+	while(!pq2.empty())
+	{
+		int dst = pq2.top().dst;
+		pq2.pop();
+		if(dst<st[count%3])
+			dst = st[count%3]+s[1].len;
+		else
+			dst+=s[1].len+1;
+		st[count%3]=dst;
+		ret = max(ret,st[count%3]);
+		count++;
+	}
+
+	return ret;
+}
+int ans=INT_MAX;
+void dfs(int n)
+{
+	if(n==p.size())
+	{
+		ans=min(ans,solve());
+		return ;
+	}
+	for(int i=1;i<=s.size();i++)
+	{
+		p[n].num=i;
+		dfs(n+1);
+	}
 }
 int main()
 {
 	scanf("%d", &T);
 	for(int t=1;t<=T;t++)
 	{
-		memset(bug,0,sizeof(bug));
-		memset(map,0,sizeof(bug));
-
-		scanf("%d %d %d", &N, &M, &K);
-		int x, y, cnt, dir;
-		for(int i=0;i<K;i++){
-			scanf("%d %d %d %d", &bug[i].x,&bug[i].y,&cnt,&dir);
-			bug[i].cnt=cnt;
-			bug[i].dir=dir;
-			map[bug[i].x][bug[i].y]=1;
-		}
-		for(int m=0;m<M;m++){
-
-			for(int i=0;i<K;i++)
+		memset(map,0,sizeof(map));
+		p.clear();
+		s.clear();
+		ans=INT_MAX;
+		scanf("%d", &N);
+		int num=0;
+		for(int i=1;i<=N;i++)
+		{
+			for(int j=1;j<=N;j++)
 			{
-				int nx = bug[i].x+d[bug[i].dir][0];
-				int ny = bug[i].y+d[bug[i].dir][1];
-				map[bug[i].x][bug[i].y]--;
-				bug[i].x=nx;
-				bug[i].y=ny;
-				map[nx][ny]++;
-			}
-			for(int i=0;i<N;i++)
-			{
-				for(int j=0;j<N;j++)
-				{
-					if(map[i][j]>1)
-					{
-						mix(i,j);
-						map[i][j]=1;
-					}
+				scanf("%d", &map[i][j]);
+				if(map[i][j]==1){
+					p.push_back({i,j,0,0});
+				}
+				if(map[i][j]>=2){
+					s.push_back({i,j,map[i][j],0});
 				}
 			}
-			for(int i=0;i<K;i++)
-			{
-				if(bug[i].x==0||bug[i].x==N-1||bug[i].y==0||bug[i].y==N-1)
-				{
-					switch(bug[i].dir)
-					{
-						case 1:
-							bug[i].dir=2;
-							break;
-						case 2:
-							bug[i].dir=1;
-							break;
-						case 3:
-							bug[i].dir=4;
-							break;
-						case 4:
-							bug[i].dir=3;
-							break;
-					}
-					bug[i].cnt/=2;
-				}
-			}
-			/*
-			printf("##########\n");
-			for(int i=0;i<K;i++)
-			{
-				printf("%d %d %d %d\n", bug[i].x, bug[i].y, bug[i].cnt, bug[i].dir);
-			}
-			for(int i=0;i<N;i++){
-				for(int j=0;j<N;j++)
-					printf("%d ", map[i][j]);
-				printf("\n");
-			}
-			*/
 		}
-		cnt=0;
-		for(int i=0;i<K;i++)
-			cnt+=bug[i].cnt;
-		printf("#%d %d\n", t, cnt);
+		dfs(0);
+		printf("#%d %d\n", t,ans);
 	}
 	return 0;
 }
