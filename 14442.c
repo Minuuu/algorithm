@@ -2,9 +2,9 @@
 #include<algorithm>
 #include<queue>
 using namespace std;
-int N,M;
+int N,M,K;
 int map[1001][1001];
-int visit[1001][1001][2];
+int visit[1001][1001][10];
 int dir[4][2]={{0,1},{1,0},{0,-1},{-1,0}};
 int ans=987654321;
 typedef struct node{
@@ -40,10 +40,10 @@ void solve(int x,int y)
 					}
 					else
 					{
-						if(state==0)
+						if(state<K)
 						{
-							visit[nx][ny][1]=1;
-							q.push({nx,ny,cnt+1,1});
+							visit[nx][ny][state]=1;
+							q.push({nx,ny,cnt+1,state+1});
 						}
 					}
 				}
@@ -53,7 +53,7 @@ void solve(int x,int y)
 }
 int main()
 {
-	scanf("%d %d", &N, &M);
+	scanf("%d %d %d", &N, &M, &K);
 	for(int i=1;i<=N;i++)
 	{
 		for(int j=1;j<=M;j++)
@@ -66,4 +66,3 @@ int main()
 	printf("%d\n", ans);
 	return 0;
 }
-
