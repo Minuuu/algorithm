@@ -18,7 +18,8 @@ void solve(int n)
 		q.pop();
 		if(pos==K){
 			ans=min(ans,time);
-			//return ;
+	//		printf("%d\n", ans);
+			return ;
 		}
 		else{
 			if(pos*2<100001 && visit[pos*2]==0)
