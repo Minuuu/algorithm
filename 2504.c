@@ -15,8 +15,6 @@ int main()
 		if (str[i] == ')')
 		{
 			if (!s.empty()) {
-
-
 				if (s.top() == '(')
 				{
 					s.pop();
@@ -41,7 +39,6 @@ int main()
 		{
 			if (!s.empty())
 			{
-
 				if (s.top() == '[')
 				{
 					if (str[i - 1] == '[')
