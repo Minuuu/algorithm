@@ -5,7 +5,7 @@ using namespace std;
 int n, m;
 int mem[105];
 int cost[105];
-int d[105][6000];
+int d[105][10001];
 int ans=987654321;
 int cnt = 0;
 int go(int idx, int c)
@@ -31,7 +31,7 @@ int main()
 	for (int i = 1; i <= n; i++)
 		scanf("%d", cost + i);
 	memset(d, -1, sizeof(d));
-	for(int i=0;i<=6000;i++){
+	for(int i=0;i<=10000;i++){
 		if (go(1,i) >= m) {
 			printf("%d\n", i);
 			break;

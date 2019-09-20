@@ -11,15 +11,7 @@ int main()
 		scanf("%ld", &num[i]);
 	dp[1]=num[1];
 	for(int i=2;i<=n;i++)
-	{
 		dp[i]=max(num[i],dp[i-1]+num[i]);
-	}
-	long long m=-1001;
-	for(int i=1;i<=n;i++)
-	{
-		if(m<dp[i])
-			m=dp[i];
-	}
-	printf("%ld\n", m);
+	printf("%ld\n", *max_element(dp+1,dp+n+1));
 	return 0;
 }
