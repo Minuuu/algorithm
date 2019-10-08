@@ -4,5 +4,22 @@
         "**/.project": true,
         "**/.settings": true,
         "**/.factorypath": true
+    },
+    "python.pythonPath": "/usr/local/bin/python3",
+    "files.associations": {
+        "__split_buffer": "c",
+        "deque": "c",
+        "string": "c",
+        "vector": "c",
+        "__bit_reference": "c",
+        "__hash_table": "c",
+        "__tree": "c",
+        "array": "c",
+        "bitset": "c",
+        "initializer_list": "c",
+        "iterator": "c",
+        "map": "c",
+        "string_view": "c",
+        "unordered_map": "c"
     }
 }

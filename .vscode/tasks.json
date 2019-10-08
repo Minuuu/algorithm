@@ -26,6 +26,24 @@
             "label": "clang++ build active file",
             "command": "/usr/bin/clang++",
             "args": [
+                "-std=c++14",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "/usr/bin/g++",
+            "args": [
                 "-g",
                 "${file}",
                 "-o",
@@ -47,24 +65,8 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
-            ],
-            "options": {
-                "cwd": "/usr/bin"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ]
-        },
-        {
-            "type": "shell",
-            "label": "g++ build active file",
-            "command": "/usr/bin/g++",
-            "args": [
-                "-g",
-                "${file}",
-                "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-std=c++14"
             ],
             "options": {
                 "cwd": "/usr/bin"
