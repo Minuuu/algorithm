@@ -38,8 +38,8 @@ int main()
                     }
                 }
             }
-            q[i].pop();
-            printf("%d", ans);
+            q[ans].pop();
+            printf("%d ", ans);
             
         }
     }

@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<vector>
-
+vector<pair<int,int>> v[26];
 int main()
 {
     int N,L,E;
@@ -10,7 +10,8 @@ int main()
         char a,b;
         int d;
         scanf(" %c %c %d", a,b,d);
-        v[a-'A'].push_back({b-'A',d});
+        v[b-'A'].push_back({a-'A',d});
+        
     }
     return 0;
 }

@@ -16,7 +16,6 @@ int main()
             m.insert({str,1});
         }
         else{
-            cout<<m[str];
             m[str]++;
         }
     }  
