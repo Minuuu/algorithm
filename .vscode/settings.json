@@ -20,6 +20,9 @@
         "iterator": "c",
         "map": "c",
         "string_view": "c",
-        "unordered_map": "c"
+        "unordered_map": "c",
+        "algorithm": "c",
+        "random": "c",
+        "iosfwd": "c"
     }
 }
