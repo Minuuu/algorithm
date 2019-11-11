@@ -23,6 +23,8 @@
         "unordered_map": "c",
         "algorithm": "c",
         "random": "c",
-        "iosfwd": "c"
+        "iosfwd": "c",
+        "__node_handle": "c",
+        "queue": "c"
     }
 }
